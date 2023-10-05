@@ -1,0 +1,29 @@
+shodan: #vendor
+  key: 
+    shodan_creds
+  feeds:
+    - feed_name: infium 
+      url: "https://api.shodan.io"
+      endpoint: "/shodan/host/search"
+      params:
+        query:
+          port:135
+          org:"Infium"
+
+    - feed_name: cogent
+      url: "https://api.shodan.io"
+      endpoint: "/shodan/host/search"
+      params:
+        query: 
+          org:"Cogent Communications" 
+          org:"Cogent Communications France SAS"
+          
+    - feed_name: hong_kong
+      url: "https://api.shodan.io"
+      endpoint: "/shodan/host/search"
+      params:
+        query:
+          org:"DXTL HK" 
+          port:9097
+
+        
