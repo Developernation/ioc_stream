@@ -1,6 +1,4 @@
 shodan: #vendor
-  key: 
-    shodan_creds
   feeds:
     - feed_name: infium 
       url: "https://api.shodan.io"

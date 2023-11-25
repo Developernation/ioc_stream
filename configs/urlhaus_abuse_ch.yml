@@ -1,0 +1,9 @@
+urlhaus: #vendor
+  feeds:
+    - feed_name: recent_malware_urls
+      url: "https://urlhaus-api.abuse.ch/v1"
+      endpoint: "/urls/recent/"
+
+    - feed_name: online_malware_urls
+      url: https://urlhaus.abuse.ch/downloads
+      endpoint: "/json_online/"
