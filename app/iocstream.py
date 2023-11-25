@@ -2,7 +2,7 @@ import os
 import asyncio
 import json
 import logging
-from typing import Dict, Any
+from typing import List, Dict, Any
 import aiohttp
 import yaml
 import os
@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.WARNING,format='%(process)d-%(levelname)s-%(me
 
 class FeedConfigParser():
 
-    def __init__(self,config_filename:str, creds: str = None):
+    def __init__(self,config_filename:str, creds: str = None) -> None:
         self.__req_feeds = None 
         self.creds = creds
         self.__config_filename = config_filename
@@ -23,7 +23,7 @@ class FeedConfigParser():
             logging.debug(config_data)
             return config_data
 
-    def feed_parser(self,vendor: str,):
+    def feed_parser(self,vendor: str,) -> List[Dict]:
         self.__req_feeds = []
         data = self.get_config()
         feeds = data.get(vendor).get('feeds') 
@@ -45,7 +45,9 @@ class FeedConfigParser():
     async def fetch(self, url, params, feed_name ,session):
         async with session.get(url, params=params, ssl=True) as response:
             status = response.status
-            data = await response.json()
+            response.encoding = 'utf-8'
+            data = await response.json(content_type='application/json')
+
             data_length = len(data)
             data_dict = {
                 "url": url,
@@ -64,19 +66,4 @@ class FeedConfigParser():
                 for feed in  self.__req_feeds
                 ]
             results = await asyncio.gather(*tasks)
-            return json.dumps(results)
-
-
-if __name__ == '__main__':
-    shodan_data = FeedConfigParser('shodan_config.yml',creds = '<shodan_api_key>')
-    shodan_data.feed_parser('shodan')
-    urlhaus_data = FeedConfigParser('urlhaus_abuse_ch.yml')
-    urlhaus_data.feed_parser('urlhaus')
-    
-    loop = asyncio.get_event_loop()
-    shodan_res = loop.run_until_complete(shodan_data.fetch_all())
-    urlhaus_res = loop.run_until_complete(urlhaus_data.fetch_all())
-
-    data = json.loads(shodan_res)
-    data.append(json.loads(urlhaus_res))
-    print(json.dumps(data))
+            return results

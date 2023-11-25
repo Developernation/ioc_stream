@@ -11,6 +11,6 @@ ADD . .
 #WORKDIR /app
 
 # Run app.py when the container launches
-ENTRYPOINT ["python", "/app/iocstream.py"]
+ENTRYPOINT ["python", "/main.py"]
 
 
