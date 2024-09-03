@@ -3,7 +3,15 @@ urlhaus: #vendor
     - feed_name: recent_malware_urls
       url: "https://urlhaus-api.abuse.ch/v1"
       endpoint: "/urls/recent/"
+      params:
+          X-OTX-API-KEY
+          User-Agent:"Python3"
+          Content-Type:"application/json"
 
     - feed_name: online_malware_urls
       url: https://urlhaus.abuse.ch/downloads
       endpoint: "/json_online/"
+      params:
+          X-OTX-API-KEY
+          User-Agent:"Python3"
+          Content-Type:"application/json"
